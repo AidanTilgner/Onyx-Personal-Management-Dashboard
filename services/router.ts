@@ -13,8 +13,6 @@ const enabledRouters = [
   },
 ];
 
-console.log("Enabled services: ", enabledServices, enabledRouters);
-
 const writeRoutesToMetadata = () => {
   const routes = enabledRouters.map((service) => `/${service.name}/`);
   writeFileSync(metadataLocation, routes.join("\n"));
