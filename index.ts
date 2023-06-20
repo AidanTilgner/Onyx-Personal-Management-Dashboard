@@ -5,6 +5,7 @@ import http from "http";
 import { Server } from "socket.io";
 import { initSocketIO } from "./utils/socket.io";
 import applicationRouter from "./routers/application";
+import apiRouter from "./routers/apirouter";
 import { initializeDatabase } from "./database";
 
 config();
@@ -38,6 +39,7 @@ app.use(
   }
 );
 
+app.use("/api", apiRouter);
 app.use(applicationRouter);
 
 if (process.env.NODE_ENV === "development") {
