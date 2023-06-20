@@ -4,14 +4,16 @@ import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 import { initSocketIO } from "./utils/socket.io";
-import path from "path";
 import applicationRouter from "./routers/application";
+import { initializeDatabase } from "./database";
 
 config();
 
 const PORT = process.env.PORT || 3000;
 
 const app = Express();
+
+initializeDatabase();
 
 const server = http.createServer(app);
 const io = new Server(server);

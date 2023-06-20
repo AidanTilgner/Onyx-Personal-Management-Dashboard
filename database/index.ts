@@ -1,9 +1,10 @@
 import { DataSource } from "typeorm";
 import "reflect-metadata";
 import { seedDatabase } from "./seeders";
+import { User } from "./models/user";
 
 export const entities = {
-  // put entities here
+  User,
 };
 
 export const dataSource = new DataSource({
