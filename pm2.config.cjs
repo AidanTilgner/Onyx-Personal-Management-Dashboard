@@ -3,7 +3,7 @@
 module.exports = {
   apps: [
     {
-      name: "[APP NAME]",
+      name: "Onyx Personal Management Dashboard",
       script: "npm run start",
     },
   ],
