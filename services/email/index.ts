@@ -1,4 +1,4 @@
-import { Service } from "..";
+import { Service } from "../construct";
 import { sendEmail, EmailConfig } from "./nodemailer";
 
 class EmailService extends Service {

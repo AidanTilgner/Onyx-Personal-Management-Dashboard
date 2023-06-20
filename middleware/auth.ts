@@ -2,7 +2,7 @@ import { Response, Request, NextFunction } from "express";
 import { readFileSync } from "fs";
 import Logger from "../utils/logger";
 
-const apiKeys = JSON.parse(readFileSync(".apikeys.json", "utf-8"));
+const apiKeys = JSON.parse(readFileSync(".api-keys.json", "utf-8"));
 
 const authLogger = new Logger({
   name: "Auth Middleware",
