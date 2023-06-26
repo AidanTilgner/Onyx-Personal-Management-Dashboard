@@ -32,6 +32,11 @@ class Logger {
     console.warn("|WARNING|", ...args);
     this.writeLog("|WARNING|", ...args);
   }
+
+  public info(...args: any[]) {
+    console.info("|INFO|", ...args);
+    this.writeLog("|INFO|", ...args);
+  }
 }
 
 export default Logger;

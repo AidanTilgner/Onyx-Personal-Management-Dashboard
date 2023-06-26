@@ -2,15 +2,17 @@ import { DataSource } from "typeorm";
 import "reflect-metadata";
 import { seedDatabase } from "./seeders";
 import { User } from "./models/user";
+import { Note } from "./models/note";
 
 export const entities = {
   User,
+  Note,
 };
 
 export const dataSource = new DataSource({
   type: "sqlite",
   database: "datastore/database.sqlite",
-  synchronize: true, // ! MAKE SURE TO SET THIS BASED ON YOUR PREFERENCES
+  synchronize: true,
   entities: Object.values(entities),
   migrations: ["database/migrations/*.ts"],
   migrationsTableName: "migrations",

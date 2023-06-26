@@ -6,27 +6,21 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from "typeorm";
-import { Note } from "./note";
+import { User } from "./user";
 
 @Entity()
-export class User {
+export class Note {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column("text", { unique: true })
-  name!: string;
-
-  @Column("text", { unique: true })
-  email!: string;
+  @Column("text")
+  title!: string;
 
   @Column("text")
-  password!: string;
+  content!: string;
 
-  @Column("text")
-  role!: string;
-
-  @OneToMany(() => Note, (note) => note.user)
-  notes!: Note[];
+  @OneToMany(() => User, (user) => user.notes)
+  user!: User;
 
   @CreateDateColumn()
   createdAt!: Date;
