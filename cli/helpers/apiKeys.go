@@ -9,7 +9,7 @@ import (
 type APIKeys map[string][]string
 
 func AddAPIKey(service string) error {
-	filePath := "../.api-keys.json"
+	filePath := ".api-keys.json"
 
 	// Read the JSON file
 	data, err := ioutil.ReadFile(filePath)

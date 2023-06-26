@@ -24,6 +24,8 @@ func AddAPIKey(rs ResetFunction) {
 
 	if err != nil {
 		comps.WarningText(err.Error())
+		rs()
+		return
 	}
 
 	comps.InfoText("API key added successfully!")
