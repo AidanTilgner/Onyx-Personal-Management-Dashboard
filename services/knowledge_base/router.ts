@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { knowledgeBaseService } from ".";
+import notesRouter from "./routers/notes";
 
 const router = Router();
 
-router.post("add-note", async (req, res) => {});
+router.use("/notes", notesRouter);
 
 export default router;

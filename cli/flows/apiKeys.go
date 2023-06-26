@@ -1,8 +1,8 @@
 package flows
 
 import (
-	comps "onyx-personal-management-dashboard-cli/components"
-	helpers "onyx-personal-management-dashboard-cli/helpers"
+	comps "onyx-personal-management-system-cli/components"
+	helpers "onyx-personal-management-system-cli/helpers"
 
 	"github.com/pterm/pterm"
 )

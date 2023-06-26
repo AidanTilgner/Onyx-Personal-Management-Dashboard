@@ -14,14 +14,23 @@ export default async function verifyAPIKey(
   next: NextFunction
 ) {
   try {
-    const apiKey = req.headers["x-api-key"];
+    const apiKey =
+      req.headers["x-api-key"] ||
+      (req.headers["Authorization"] as string).split(" ")[1];
+    const service = req.headers["x-service"] as string;
     if (!apiKey) {
       authLogger.warn("No API key provided");
       return res.status(401).json({
-        error: "Unauthorized",
+        error: "Unauthorized, no API key provided",
       });
     }
-    if (!apiKeys[req.headers["x-service"] as string].includes(apiKey)) {
+    if (!service) {
+      authLogger.warn("No service provided");
+      return res.status(401).json({
+        error: "Unauthorized, no service provided",
+      });
+    }
+    if (!apiKeys[service].includes(apiKey)) {
       authLogger.warn(`Unauthorized API key: ${apiKey}`);
       return res.status(401).json({
         error: "Unauthorized",

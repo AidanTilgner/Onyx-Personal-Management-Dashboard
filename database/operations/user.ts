@@ -8,12 +8,13 @@ const userOperationsLogger = new Logger({
 
 const { INITIAL_USER_NAME } = process.env;
 
-export const getDefaultUser = async () => {
+export const getDefaultUser = async (loadRelations?: string[]) => {
   try {
     const user = await dataSource.getRepository(User).findOne({
       where: {
         name: INITIAL_USER_NAME,
       },
+      relations: loadRelations,
     });
     return user;
   } catch (error) {

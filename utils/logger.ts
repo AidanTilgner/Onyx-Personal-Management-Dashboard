@@ -40,3 +40,11 @@ class Logger {
 }
 
 export default Logger;
+
+const metaDataLocation = "storage/metadata";
+
+export const logMetaData = (name: string, content: string, append = false) => {
+  writeFileSync(`${metaDataLocation}/${name}`, content, {
+    flag: append ? "a+" : "w+",
+  });
+};

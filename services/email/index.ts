@@ -18,4 +18,9 @@ class EmailService extends Service {
 }
 
 export const emailService = new EmailService();
-export { default as emailRouter } from "./router";
+import router from "./router";
+
+export const config = {
+  router,
+  service: emailService,
+};

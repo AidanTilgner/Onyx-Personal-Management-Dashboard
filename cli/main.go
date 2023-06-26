@@ -1,8 +1,8 @@
 package main
 
 import (
-	comps "onyx-personal-management-dashboard-cli/components"
-	flows "onyx-personal-management-dashboard-cli/flows"
+	comps "onyx-personal-management-system-cli/components"
+	flows "onyx-personal-management-system-cli/flows"
 )
 
 func main() {

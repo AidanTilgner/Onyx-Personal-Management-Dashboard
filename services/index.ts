@@ -1,8 +1,9 @@
-import Logger from "../utils/logger";
-import * as EmailService from "./email";
+import { config as EmailService } from "./email";
+import { config as KnowledgeBaseService } from "./knowledge_base";
 
 export const services = {
   email: EmailService,
+  knowledge_base: KnowledgeBaseService,
 };
 
-export const enabledServices = [EmailService];
+export const enabledServices = [services.email, services.knowledge_base];

@@ -1,4 +1,4 @@
-module onyx-personal-management-dashboard-cli
+module onyx-personal-management-system-cli
 
 go 1.18
 

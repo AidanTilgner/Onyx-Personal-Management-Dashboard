@@ -4,7 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  ManyToOne,
 } from "typeorm";
 import { User } from "./user";
 
@@ -19,7 +19,7 @@ export class Note {
   @Column("text")
   content!: string;
 
-  @OneToMany(() => User, (user) => user.notes)
+  @ManyToOne(() => User, (user) => user.notes)
   user!: User;
 
   @CreateDateColumn()

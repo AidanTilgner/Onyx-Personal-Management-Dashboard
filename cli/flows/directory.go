@@ -1,7 +1,7 @@
 package flows
 
 import (
-	comps "onyx-personal-management-dashboard-cli/components"
+	comps "onyx-personal-management-system-cli/components"
 )
 
 type ResetFunction func()

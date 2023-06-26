@@ -24,11 +24,9 @@ export const addNoteToDefaultUser = async (note: {
     newNote.content = note.content;
     newNote.user = defaultUser;
 
-    const savedNote = await dataSource.manager.save(newNote);
+    await dataSource.manager.save(newNote);
 
-    noteOperationsLogger.info(`Added note ${savedNote.id} to default user`);
-
-    return savedNote;
+    return newNote;
   } catch (error) {
     noteOperationsLogger.error(error);
     return null;
@@ -37,20 +35,14 @@ export const addNoteToDefaultUser = async (note: {
 
 export const getNotesForDefaultUser = async () => {
   try {
-    const defaultUser = await getDefaultUser();
+    const defaultUser = await getDefaultUser(["notes"]);
 
     if (!defaultUser) {
       noteOperationsLogger.error("No default user found");
       return null;
     }
 
-    const notes = await dataSource.manager.find(Note, {
-      where: {
-        user: defaultUser,
-      },
-    });
-
-    noteOperationsLogger.info(`Found ${notes.length} notes for default user`);
+    const notes = defaultUser.notes;
 
     return notes;
   } catch (error) {
@@ -71,7 +63,9 @@ export const getNoteByIdForDefaultUser = async (id: Note["id"]) => {
     const note = await dataSource.manager.findOne(Note, {
       where: {
         id,
-        user: defaultUser,
+        user: {
+          id: defaultUser.id,
+        },
       },
     });
 
@@ -79,8 +73,6 @@ export const getNoteByIdForDefaultUser = async (id: Note["id"]) => {
       noteOperationsLogger.error(`No note found with id ${id}`);
       return null;
     }
-
-    noteOperationsLogger.info(`Found note ${note.id} for default user`);
 
     return note;
   } catch (error) {
@@ -91,10 +83,10 @@ export const getNoteByIdForDefaultUser = async (id: Note["id"]) => {
 
 export const updateNoteByIdForDefaultUser = async (
   id: Note["id"],
-  note: {
+  note: Partial<{
     title: Note["title"];
     content: Note["content"];
-  }
+  }>
 ) => {
   try {
     const defaultUser = await getDefaultUser();
@@ -107,7 +99,9 @@ export const updateNoteByIdForDefaultUser = async (
     const noteToUpdate = await dataSource.manager.findOne(Note, {
       where: {
         id,
-        user: defaultUser,
+        user: {
+          id: defaultUser.id,
+        },
       },
     });
 
@@ -116,16 +110,44 @@ export const updateNoteByIdForDefaultUser = async (
       return null;
     }
 
-    noteToUpdate.title = note.title;
-    noteToUpdate.content = note.content;
+    if (note.title) noteToUpdate.title = note.title;
+    if (note.content) noteToUpdate.content = note.content;
 
     const updatedNote = await dataSource.manager.save(noteToUpdate);
 
-    noteOperationsLogger.info(
-      `Updated note ${updatedNote.id} for default user`
-    );
-
     return updatedNote;
+  } catch (error) {
+    noteOperationsLogger.error(error);
+    return null;
+  }
+};
+
+export const deleteNoteByIdForDefaultUser = async (id: Note["id"]) => {
+  try {
+    const defaultUser = await getDefaultUser();
+
+    if (!defaultUser) {
+      noteOperationsLogger.error("No default user found");
+      return null;
+    }
+
+    const noteToDelete = await dataSource.manager.findOne(Note, {
+      where: {
+        id,
+        user: {
+          id: defaultUser.id,
+        },
+      },
+    });
+
+    if (!noteToDelete) {
+      noteOperationsLogger.error(`No note found with id ${id}`);
+      return null;
+    }
+
+    await dataSource.manager.remove(Note, noteToDelete);
+
+    return noteToDelete;
   } catch (error) {
     noteOperationsLogger.error(error);
     return null;

@@ -1,21 +1,24 @@
 import { Router } from "express";
 import { enabledServices, services } from ".";
 import { writeFileSync } from "fs";
+import { logMetaData } from "../utils/logger";
 
 const router = Router();
 
 const metadataLocation = "storage/metadata/service-routes.txt";
 
-const enabledRouters = [
-  {
-    name: services.email.emailService.getServiceRouteName(),
-    router: services.email.emailRouter,
-  },
-];
+const enabledRouters = enabledServices.map(({ service, router }) => {
+  return {
+    name: service.getServiceRouteName(),
+    router,
+  };
+});
 
 const writeRoutesToMetadata = () => {
-  const routes = enabledRouters.map((service) => `/${service.name}/`);
-  writeFileSync(metadataLocation, routes.join("\n"));
+  const routes = enabledRouters.map(
+    (service) => `/api/services/${service.name}/`
+  );
+  logMetaData("service-routes.txt", routes.join("\n"), false);
 };
 
 writeRoutesToMetadata();
