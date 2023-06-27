@@ -2,6 +2,7 @@ import { Note } from "../models/note";
 import { dataSource } from "..";
 import Logger from "../../utils/logger";
 import { getDefaultUser } from "./user";
+import { levenDistance } from "../../utils/search";
 
 const noteOperationsLogger = new Logger({
   name: "Note Operations",
@@ -12,7 +13,7 @@ export const addNoteToDefaultUser = async (note: {
   content: Note["content"];
 }) => {
   try {
-    const defaultUser = await getDefaultUser();
+    const defaultUser = await getDefaultUser(["notes"]);
 
     if (!defaultUser) {
       noteOperationsLogger.error("No default user found");
@@ -53,7 +54,7 @@ export const getNotesForDefaultUser = async () => {
 
 export const getNoteByIdForDefaultUser = async (id: Note["id"]) => {
   try {
-    const defaultUser = await getDefaultUser();
+    const defaultUser = await getDefaultUser(["notes"]);
 
     if (!defaultUser) {
       noteOperationsLogger.error("No default user found");
@@ -89,7 +90,7 @@ export const updateNoteByIdForDefaultUser = async (
   }>
 ) => {
   try {
-    const defaultUser = await getDefaultUser();
+    const defaultUser = await getDefaultUser(["notes"]);
 
     if (!defaultUser) {
       noteOperationsLogger.error("No default user found");
@@ -124,7 +125,7 @@ export const updateNoteByIdForDefaultUser = async (
 
 export const deleteNoteByIdForDefaultUser = async (id: Note["id"]) => {
   try {
-    const defaultUser = await getDefaultUser();
+    const defaultUser = await getDefaultUser(["notes"]);
 
     if (!defaultUser) {
       noteOperationsLogger.error("No default user found");
@@ -148,6 +149,44 @@ export const deleteNoteByIdForDefaultUser = async (id: Note["id"]) => {
     await dataSource.manager.remove(Note, noteToDelete);
 
     return noteToDelete;
+  } catch (error) {
+    noteOperationsLogger.error(error);
+    return null;
+  }
+};
+
+export const searchNotesForDefaultUser = async (
+  text: string,
+  limit: number,
+  threshold: number
+) => {
+  try {
+    const defaultUser = await getDefaultUser(["notes"]);
+
+    if (!defaultUser) {
+      noteOperationsLogger.error("No default user found");
+      return null;
+    }
+
+    const notes = defaultUser.notes;
+
+    const similarNotes = notes
+      .map((note) => {
+        const distanceContent = levenDistance(text, note.content);
+        const distanceTitle = levenDistance(text, note.title);
+        const minDistance = Math.min(distanceContent, distanceTitle);
+
+        return {
+          note,
+          distance: minDistance,
+        };
+      })
+      .filter((note) => note.distance <= threshold)
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, limit)
+      .map((note) => ({ ...note.note, distance: note.distance }));
+
+    return similarNotes;
   } catch (error) {
     noteOperationsLogger.error(error);
     return null;

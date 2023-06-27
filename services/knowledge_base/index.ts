@@ -5,6 +5,7 @@ import {
   getNoteByIdForDefaultUser,
   deleteNoteByIdForDefaultUser,
   updateNoteByIdForDefaultUser,
+  searchNotesForDefaultUser,
 } from "../../database/operations/notes";
 import { Note } from "../../database/models/note";
 
@@ -61,6 +62,19 @@ class KnowledgeBaseService extends Service {
   ) {
     try {
       return await updateNoteByIdForDefaultUser(id, note);
+    } catch (error) {
+      this.error(error);
+      return null;
+    }
+  }
+
+  public async getSimilarNotesDU(
+    text: string,
+    limit: number,
+    threshold: number
+  ) {
+    try {
+      return await searchNotesForDefaultUser(text, limit, threshold);
     } catch (error) {
       this.error(error);
       return null;

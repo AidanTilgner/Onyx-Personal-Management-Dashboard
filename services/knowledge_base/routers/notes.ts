@@ -137,4 +137,34 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.post("/search", async (req, res) => {
+  try {
+    const { text, limit, threshold } = req.body;
+
+    if (!text || !limit || !(threshold >= 0)) {
+      return res.status(400).json({
+        message: "Missing required fields. Required: text, limit, threshold.",
+      });
+    }
+
+    const notes = await knowledgeBaseService.getSimilarNotesDU(
+      text,
+      limit,
+      threshold
+    );
+
+    if (notes) {
+      return res.status(200).json({ message: "Notes found.", data: notes });
+    } else {
+      return res.status(500).json({ message: "Something went wrong." });
+    }
+  } catch (error) {
+    knowledgeBaseService.error(
+      "Error searching notes for default user.",
+      error
+    );
+    res.status(500).json({ message: "Something went wrong." });
+  }
+});
+
 export default router;
