@@ -141,7 +141,7 @@ router.post("/search", async (req, res) => {
   try {
     const { text, limit, threshold } = req.body;
 
-    if (!text || !limit || !(threshold >= 0)) {
+    if (!text || !limit || isNaN(threshold)) {
       return res.status(400).json({
         message: "Missing required fields. Required: text, limit, threshold.",
       });

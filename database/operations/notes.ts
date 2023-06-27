@@ -158,7 +158,7 @@ export const deleteNoteByIdForDefaultUser = async (id: Note["id"]) => {
 export const searchNotesForDefaultUser = async (
   text: string,
   limit: number,
-  threshold: number
+  threshold = -1
 ) => {
   try {
     const defaultUser = await getDefaultUser(["notes"]);
@@ -181,7 +181,10 @@ export const searchNotesForDefaultUser = async (
           distance: minDistance,
         };
       })
-      .filter((note) => note.distance <= threshold)
+      .filter((note) => {
+        if (threshold < 0) return true;
+        return note.distance <= threshold;
+      })
       .sort((a, b) => a.distance - b.distance)
       .slice(0, limit)
       .map((note) => ({ ...note.note, distance: note.distance }));
