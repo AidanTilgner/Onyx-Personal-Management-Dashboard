@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { DefaultResponse } from "../declarations/server";
 import { api } from "../utils/axios";
+import { AxiosCacheInstance } from "axios-cache-interceptor";
+import { AxiosInstance } from "axios";
 
 export interface UseFetchConfig<B, D> {
-  url: string;
+  url?: string;
   method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
   body?: B;
   onBefore?: () => void;
@@ -16,6 +18,7 @@ export interface UseFetchConfig<B, D> {
   runOnMount?: boolean;
   dependencies?: unknown[];
   runOnDependencies?: unknown[];
+  withClient?: AxiosCacheInstance;
 }
 
 function useFetch<B, D>({
@@ -32,6 +35,7 @@ function useFetch<B, D>({
   runOnMount = false,
   dependencies = [],
   runOnDependencies = [],
+  withClient,
 }: UseFetchConfig<B, D>) {
   const queryStr = query
     ? Object.keys(query)
@@ -39,11 +43,13 @@ function useFetch<B, D>({
         .join("&")
     : "";
 
-  const urlToUse = queryStr ? `${url}?${queryStr}` : url;
+  const urlToUse = queryStr ? `${url}?${queryStr}` : url || "";
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<D>();
   const [success, setSuccess] = useState(false);
+
+  const useClient = withClient || api;
 
   const useBody = () => {
     if (body instanceof FormData) {
@@ -59,7 +65,7 @@ function useFetch<B, D>({
       refreshHeaders();
       onBefore && onBefore();
       setLoading(true);
-      return api<DefaultResponse<D>>(loadConfig?.updatedUrl || urlToUse, {
+      return useClient<DefaultResponse<D>>(loadConfig?.updatedUrl || urlToUse, {
         method,
         data: useBody(),
         headers,
@@ -92,10 +98,10 @@ function useFetch<B, D>({
   );
 
   const refreshHeaders = () => {
-    api.defaults.headers["Authorization"] = `Bearer ${localStorage.getItem(
-      "accessToken"
-    )}`;
-    api.defaults.headers["x-refresh-token"] =
+    useClient.defaults.headers[
+      "Authorization"
+    ] = `Bearer ${localStorage.getItem("accessToken")}`;
+    useClient.defaults.headers["x-refresh-token"] =
       localStorage.getItem("refreshToken");
   };
 
@@ -122,7 +128,7 @@ function useFetch<B, D>({
 
   const loadWithUrl = useCallback(
     (url: string) => {
-      api<DefaultResponse<D>>(url, {
+      useClient<DefaultResponse<D>>(url, {
         method,
         data: {
           ...body,

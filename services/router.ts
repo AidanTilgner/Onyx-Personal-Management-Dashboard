@@ -26,6 +26,24 @@ const writeRoutesToMetadata = () => {
 
 writeRoutesToMetadata();
 
+router.get("/listed", (req, res) => {
+  res.json({
+    message: "Successfully listed services",
+    data: enabledServices.map((s) => {
+      return s.service.getServiceTitleAndDescription();
+    }),
+  });
+});
+
+router.get("/from_client/listed", (req, res) => {
+  res.json({
+    message: "Successfully listed services available via client",
+    data: clientAvailableRouters.map((s) => {
+      return s.service.getServiceTitleAndDescription();
+    }),
+  });
+});
+
 enabledRouters.forEach((service) => {
   router.use(`/${service.name}`, verifyAPIKey, service.router);
 });

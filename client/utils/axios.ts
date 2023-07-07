@@ -2,20 +2,19 @@ import axios, { AxiosError } from "axios";
 import { setupCache } from "axios-cache-interceptor";
 import { logout } from "./auth";
 
-export const api = setupCache(
-  axios.create({
-    baseURL: "/api",
-    withCredentials: true,
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      "x-refresh-token": localStorage.getItem("refreshToken"),
-    },
-  }),
-  {
-    ttl: 2 * 1000,
-    interpretHeader: false,
-  }
-);
+export const apiInstance = axios.create({
+  baseURL: "/api",
+  withCredentials: true,
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    "x-refresh-token": localStorage.getItem("refreshToken"),
+  },
+});
+
+export const api = setupCache(apiInstance, {
+  ttl: 2 * 1000,
+  interpretHeader: false,
+});
 
 api.interceptors.response.use(
   (response) => {

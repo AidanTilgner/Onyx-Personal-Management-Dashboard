@@ -7,3 +7,7 @@ export const services = {
 };
 
 export const enabledServices = [services.email, services.knowledge_base];
+
+export const enabledServicesAvailableViaClient = enabledServices.filter((s) => {
+  return s.service.isAvailableViaClient();
+});
