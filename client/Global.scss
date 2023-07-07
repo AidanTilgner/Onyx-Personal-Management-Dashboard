@@ -5,6 +5,7 @@ html {
   --background-color: $backgroundColor;
   --text-color: $textColor;
   --font-family: $fontFamily;
+  --font-family-secondary: $fontFamilySecondary;
   --color-primary: $primaryColor;
   --color-accent: $accentColor;
   --color-danger: $dangerColor;
@@ -51,6 +52,7 @@ h3 {
 
 p {
   font-size: 1.6rem;
+  font-family: $fontFamilySecondary;
 
   @media (min-width: 768px) {
     font-size: 2rem;
@@ -140,22 +142,7 @@ p {
   background-color: rgba($color: $primaryColor, $alpha: 0.75);
 
   &:hover {
-    background-color: transparent;
-    @keyframes shimmer {
-      0% {
-        background-position: top left;
-      }
-      100% {
-        background-position: bottom right;
-      }
-    }
-    @include backgroundLinear;
-    background-size: 300% 300%;
-    animation-name: shimmer;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-timing-function: ease-in-out;
+    @include shimmerLinearBackground;
   }
 }
 
@@ -163,21 +150,6 @@ p {
   background-color: rgba($color: $textColor, $alpha: 0.15);
 
   &:hover {
-    background-color: transparent;
-    @keyframes shimmer {
-      0% {
-        background-position: top left;
-      }
-      100% {
-        background-position: bottom right;
-      }
-    }
-    @include backgroundLinear;
-    background-size: 300% 300%;
-    animation-name: shimmer;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-timing-function: ease-in-out;
+    @include shimmerLinearBackground;
   }
 }

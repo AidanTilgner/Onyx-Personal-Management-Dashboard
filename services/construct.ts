@@ -29,6 +29,10 @@ export class Service {
     return `${this.name} service - version ${this.version}`;
   }
 
+  public getServiceRawName() {
+    return this.name;
+  }
+
   public getServiceName() {
     return `${this.name} service`;
   }
@@ -51,9 +55,11 @@ export class Service {
 
   public getServiceTitleAndDescription() {
     return {
+      name: this.getServiceRawName(),
       title: this.getServiceName(),
       description: this.getServiceDescription(),
       version: this.getServiceVersion(),
+      formatted_name: this.getServiceVersionedFormattedName(),
     };
   }
 

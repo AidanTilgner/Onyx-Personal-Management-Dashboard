@@ -13,12 +13,12 @@ function Navbar() {
   const unauthedRoutes = () => {
     return (
       <>
-        <li onClick={toggle} className={styles.mobileItem}>
+        <li onClick={toggle}>
           <Link to="/signup">
             <button className="btn btn-secondary">Sign Up</button>
           </Link>
         </li>
-        <li onClick={toggle} className={styles.mobileItem}>
+        <li onClick={toggle}>
           <Link to="/login">
             <button className="btn btn-primary">Login</button>
           </Link>
@@ -30,8 +30,11 @@ function Navbar() {
   const authedRoutes = () => {
     return (
       <>
-        <li onClick={toggle} className={styles.mobileItem}>
-          <Link to="/services/notes">Notes</Link>
+        <li onClick={toggle}>
+          <Link to="/services">Services</Link>
+        </li>
+        <li onClick={toggle}>
+          <Link to="/services/knowledge_base">Knowledge Base</Link>
         </li>
         <li className={styles.desktopItem}>
           <button
@@ -59,7 +62,7 @@ function Navbar() {
       </div>
       {opened && (
         <ul className={styles.mobileItems} onClick={toggle}>
-          <li onClick={toggle} className={styles.mobileItem}>
+          <li onClick={toggle}>
             <Link to="/">Home</Link>
           </li>
           {!user && unauthedRoutes()}

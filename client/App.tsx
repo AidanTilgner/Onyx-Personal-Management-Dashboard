@@ -7,6 +7,7 @@ import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
 import Home from "./pages/Home";
 import Services from "./pages/Services";
+import KnowledgeBase from "./pages/Services/KnowledgeBase";
 
 function App() {
   return (
@@ -16,7 +17,10 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Main />}>
           <Route index element={<Home />} />
-          <Route path="services" element={<Services />} />
+          <Route path="services">
+            <Route index element={<Services />} />
+            <Route path="knowledge_base" element={<KnowledgeBase />} />
+          </Route>
         </Route>
       </Routes>
     </div>

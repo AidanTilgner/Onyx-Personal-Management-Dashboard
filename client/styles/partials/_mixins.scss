@@ -36,3 +36,22 @@
     rgba($accentColor, 0.75) 100%
   );
 }
+
+@mixin shimmerLinearBackground {
+  background-color: transparent;
+  @keyframes shimmer {
+    0% {
+      background-position: top left;
+    }
+    100% {
+      background-position: bottom right;
+    }
+  }
+  @include backgroundLinear;
+  background-size: 300% 300%;
+  animation-name: shimmer;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+}

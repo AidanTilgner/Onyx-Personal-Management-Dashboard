@@ -13,15 +13,23 @@ export const useGetListedServices = (
   options?: UseFetchConfig<
     undefined,
     {
+      name: string;
       title: string;
       description: string;
       version: string;
+      formatted_name: string;
     }[]
   >
 ) => {
   return useServicesFetch<
     undefined,
-    { title: string; description: string; version: string }[]
+    {
+      title: string;
+      description: string;
+      version: string;
+      name: string;
+      formatted_name: string;
+    }[]
   >({
     appendUrl: "/listed",
     ...options,
