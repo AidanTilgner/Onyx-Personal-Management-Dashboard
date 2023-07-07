@@ -6,34 +6,51 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  padding: 1rem;
   border-radius: 0.5rem;
   background-color: rgba($color: $textColor, $alpha: 0.15);
   transition: all 0.3s ease-in-out;
   cursor: pointer;
-  &:hover {
-    transform: translateY(-0.5rem);
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
-  }
-  &__header {
+  box-sizing: border-box;
+  text-align: left;
+
+  .noteCardHeader {
+    padding: 1.4rem 2.4rem 0 2.4rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
-    &__title {
+    position: relative;
+
+    .noteCardTitle {
       font-size: 1.5rem;
       font-weight: 600;
-      color: #000;
+      color: rgba($color: $textColor, $alpha: 1);
+      margin: 0;
+      padding: 0;
+      font-family: $fontFamily;
     }
-    &__date {
-      font-size: 1.2rem;
-      font-weight: 500;
-      color: #000;
+
+    .noteCardDate {
+      font-size: 1rem;
+      font-weight: 400;
+      color: rgba($color: $textColor, $alpha: 0.5);
+      position: absolute;
+      top: 0.8rem;
+      right: 1.4rem;
+      padding: 0;
+      margin: 0;
+      font-family: $fontFamilySecondary;
     }
   }
-  &__body {
-    font-size: 1.4rem;
-    font-weight: 500;
-    color: #000;
+
+  .noteCardContent {
+    padding: 0 2.4rem 1.4rem 2.4rem;
+
+    .noteCardText {
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: rgba($color: $textColor, $alpha: 1);
+      text-align: left;
+    }
   }
 }

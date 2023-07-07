@@ -9,13 +9,25 @@ interface NoteCardProps {
 }
 
 function index({ title, content, createdAt, updatedAt }: NoteCardProps) {
+  const formatDate = (date: string) => {
+    const dateObj = new Date(date);
+    return dateObj.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   return (
     <div className={styles.noteCard}>
       <div className={styles.noteCardHeader}>
         <h3 className={styles.noteCardTitle}>{title}</h3>
-        <p className={styles.noteCardDate}>{updatedAt}</p>
+        <p className={styles.noteCardDate}>{formatDate(updatedAt)}</p>
       </div>
-      <p className={styles.noteCardContent}>{content}</p>
+      <div className={styles.noteCardContent}>
+        <p className={styles.noteCardText}>{content}</p>
+      </div>
     </div>
   );
 }

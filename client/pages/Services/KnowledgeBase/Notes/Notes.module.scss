@@ -34,4 +34,14 @@
     font-size: 1.6rem;
     font-weight: 400;
   }
+
+  .notesList {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+
+    @media screen and (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
 }
