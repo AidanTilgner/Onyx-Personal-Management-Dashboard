@@ -1,17 +1,20 @@
 import { Router } from "express";
-import { enabledServices, services } from ".";
-import { writeFileSync } from "fs";
+import { enabledServices } from ".";
 import { logMetaData } from "../utils/logger";
+import { verifyAPIKey, checkAdmin } from "../middleware/auth";
 
 const router = Router();
-
-const metadataLocation = "storage/metadata/service-routes.txt";
 
 const enabledRouters = enabledServices.map(({ service, router }) => {
   return {
     name: service.getServiceRouteName(),
     router,
+    service,
   };
+});
+
+const clientAvailableRouters = enabledRouters.filter((e) => {
+  return e.service.isAvailableViaClient();
 });
 
 const writeRoutesToMetadata = () => {
@@ -24,7 +27,11 @@ const writeRoutesToMetadata = () => {
 writeRoutesToMetadata();
 
 enabledRouters.forEach((service) => {
-  router.use(`/${service.name}`, service.router);
+  router.use(`/${service.name}`, verifyAPIKey, service.router);
+});
+
+clientAvailableRouters.forEach((service) => {
+  router.use(`/from_client/${service.name}`, checkAdmin, service.router);
 });
 
 export default router;

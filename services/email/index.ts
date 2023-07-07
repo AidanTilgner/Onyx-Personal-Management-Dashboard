@@ -3,7 +3,11 @@ import { sendEmail, EmailConfig } from "./nodemailer";
 
 class EmailService extends Service {
   constructor() {
-    super({ name: "email", version: "1.0.0" });
+    super({
+      name: "email",
+      version: "1.0.0",
+      description: "Manage and send emails via Nodemailer.",
+    });
   }
 
   public async sendEmail({ to, subject, text, html }: EmailConfig) {

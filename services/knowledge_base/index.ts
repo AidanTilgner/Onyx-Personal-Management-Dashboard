@@ -7,11 +7,17 @@ import {
   updateNoteByIdForDefaultUser,
   searchNotesForDefaultUser,
 } from "../../database/operations/notes";
-import { Note } from "../../database/models/note";
+import Note from "../../database/models/note";
 
 class KnowledgeBaseService extends Service {
   constructor() {
-    super({ name: "knowledge_base", version: "1.0.0" });
+    super({
+      name: "knowledge_base",
+      version: "1.0.0",
+      description:
+        "Manage knowledge with notes, reminders, logs, and other features.",
+      availableViaClient: true,
+    });
   }
 
   public async addNoteDU(note: {
