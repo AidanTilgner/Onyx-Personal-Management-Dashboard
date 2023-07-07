@@ -18,6 +18,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@mantine/core": "^6.0.16",
+    "@mantine/hooks": "^6.0.16",
     "axios": "^1.4.0",
     "axios-cache-interceptor": "^1.2.0",
     "bcrypt": "^5.1.0",

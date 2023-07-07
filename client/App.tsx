@@ -6,6 +6,7 @@ import Main from "./Layouts/Main";
 import Login from "./Auth/Login";
 import Signup from "./Auth/Signup";
 import Home from "./pages/Home";
+import Services from "./pages/Services";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Main />}>
           <Route index element={<Home />} />
+          <Route path="services" element={<Services />} />
         </Route>
       </Routes>
     </div>
