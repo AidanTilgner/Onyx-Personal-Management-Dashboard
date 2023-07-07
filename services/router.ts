@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { enabledServices } from ".";
 import { logMetaData } from "../utils/logger";
-import { verifyAPIKey, checkAdmin } from "../middleware/auth";
+import { verifyAPIKey, checkToken } from "../middleware/auth";
 
 const router = Router();
 
@@ -24,7 +24,15 @@ const writeRoutesToMetadata = () => {
   logMetaData("service-routes.txt", routes.join("\n"), false);
 };
 
+const writeClientRoutesToMetadata = () => {
+  const routes = clientAvailableRouters.map(
+    (service) => `/api/services/from_client/${service.name}/`
+  );
+  logMetaData("client-service-routes.txt", routes.join("\n"), false);
+};
+
 writeRoutesToMetadata();
+writeClientRoutesToMetadata();
 
 router.get("/listed", (req, res) => {
   res.json({
@@ -49,7 +57,7 @@ enabledRouters.forEach((service) => {
 });
 
 clientAvailableRouters.forEach((service) => {
-  router.use(`/from_client/${service.name}`, checkAdmin, service.router);
+  router.use(`/from_client/${service.name}`, checkToken, service.router);
 });
 
 export default router;
