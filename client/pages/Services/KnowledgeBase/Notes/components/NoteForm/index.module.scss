@@ -1,0 +1,125 @@
+@use "../../../../../../styles/partials/variables" as *;
+@use "../../../../../../styles/partials/mixins" as *;
+
+.noteForm {
+}
+
+.noteTitleContainer {
+  box-sizing: border-box;
+
+  .noteTitle {
+    font-size: 1.2rem;
+    padding: 1.4rem 1.4rem;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    border: 1px solid transparent;
+    font-family: $fontFamilySecondary;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    background-color: rgba($color: $textColor, $alpha: 0.05);
+    color: $textColor;
+
+    @media screen and (min-width: 768px) {
+      padding: 1.4rem 1.8rem;
+    }
+
+    &:focus {
+      padding: 1.4rem 1.8rem;
+      outline: none;
+
+      @media screen and (min-width: 768px) {
+        padding: 1.4rem 2.4rem;
+      }
+    }
+
+    &Focused {
+      background-color: rgba($color: $textColor, $alpha: 0.15);
+      font-size: 1.6rem;
+    }
+
+    &Filled {
+      border-radius: 0.5rem 0.5rem 0 0;
+      border-bottom: 1px solid rgba($color: $textColor, $alpha: 0.25);
+    }
+  }
+}
+
+.noteContentContainer {
+  box-sizing: border-box;
+
+  .noteContent {
+    font-size: 1.2rem;
+    padding: 1.4rem 1.4rem;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 0 0 0.5rem 0.5rem;
+    border: 1px solid transparent;
+    font-family: $fontFamilySecondary;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    background-color: rgba($color: $textColor, $alpha: 0.05);
+    color: $textColor;
+    margin: 0;
+
+    @media screen and (min-width: 768px) {
+      padding: 1.4rem 1.8rem;
+    }
+
+    &:focus {
+      padding: 1.4rem 1.8rem;
+      outline: none;
+
+      @media screen and (min-width: 768px) {
+        padding: 1.4rem 2.4rem;
+      }
+    }
+
+    &Focused {
+      background-color: rgba($color: $textColor, $alpha: 0.15);
+      font-size: 1.6rem;
+    }
+
+    &Filled {
+      border-radius: 0;
+      border-top: 1px solid rgba($color: $textColor, $alpha: 0.25);
+    }
+  }
+}
+
+@keyframes noteActionsIn {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
+  }
+}
+
+.noteActionsContainer {
+  box-sizing: border-box;
+  height: 3rem;
+
+  .noteActions {
+    overflow: hidden;
+    animation: noteActionsIn 0.5s ease-in-out forwards;
+    text-align: right;
+    padding: 1.4rem 1.4rem;
+    background-color: rgba($color: $textColor, $alpha: 0.15);
+    border-radius: 0 0 0.5rem 0.5rem;
+
+    .noteAction {
+      border: none;
+      background-color: transparent;
+      color: rgba($color: $textColor, $alpha: 0.5);
+      font-size: 1.8rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        color: rgba($color: $textColor, $alpha: 1);
+      }
+    }
+  }
+}
