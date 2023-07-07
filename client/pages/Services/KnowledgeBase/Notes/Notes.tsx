@@ -9,13 +9,18 @@ import NoteCard from "./components/NoteCard";
 function Notes() {
   const { query } = useSearch();
 
-  console.log("Search query: ", query);
-
   const { data: notes, load: reloadNotes } = useGetNotes({
     runOnMount: true,
   });
 
-  console.log("Notes: ", notes);
+  const filteredNotes = () => {
+    if (!notes) return [];
+    const filteredNotes = notes.filter((note) => {
+      const asString = JSON.stringify(note);
+      return asString.toLowerCase().includes(query.toLowerCase());
+    });
+    return filteredNotes;
+  };
 
   return (
     <div className={styles.notes}>
@@ -30,9 +35,9 @@ function Notes() {
         />
       </div>
       <div className={styles.notesContainer}>
-        {notes && notes.length > 0 ? (
+        {filteredNotes() && filteredNotes().length > 0 ? (
           <div className={styles.notesList}>
-            {notes.map((note) => (
+            {filteredNotes().map((note) => (
               <NoteCard
                 title={note.title}
                 content={note.content}

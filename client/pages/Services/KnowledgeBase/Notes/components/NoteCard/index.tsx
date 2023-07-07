@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "./index.module.scss";
+import { Highlight } from "@mantine/core";
+import { useSearch } from "../../../../../../Contexts/Search";
 
 interface NoteCardProps {
   title: string;
@@ -19,6 +21,8 @@ function index({ title, content, createdAt, updatedAt }: NoteCardProps) {
     });
   };
 
+  const { query } = useSearch();
+
   return (
     <div className={styles.noteCard}>
       <div className={styles.noteCardHeader}>
@@ -26,7 +30,9 @@ function index({ title, content, createdAt, updatedAt }: NoteCardProps) {
         <p className={styles.noteCardDate}>{formatDate(updatedAt)}</p>
       </div>
       <div className={styles.noteCardContent}>
-        <p className={styles.noteCardText}>{content}</p>
+        <p className={styles.noteCardText}>
+          <Highlight highlight={query}>{content}</Highlight>
+        </p>
       </div>
     </div>
   );

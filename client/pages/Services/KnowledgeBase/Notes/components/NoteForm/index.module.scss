@@ -2,6 +2,9 @@
 @use "../../../../../../styles/partials/mixins" as *;
 
 .noteForm {
+  &.focused {
+    margin-bottom: 2.4rem;
+  }
 }
 
 .noteTitleContainer {
