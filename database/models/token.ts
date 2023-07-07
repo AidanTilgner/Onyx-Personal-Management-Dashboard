@@ -9,17 +9,14 @@ import {
 import User from "./user";
 
 @Entity()
-export default class Note {
+export default class RefreshToken {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column("text")
-  title!: string;
+  @Column({ type: "varchar", length: 255, nullable: false })
+  token!: string;
 
-  @Column("text")
-  content!: string;
-
-  @ManyToOne(() => User, (user) => user.notes)
+  @ManyToOne(() => User, (user) => user.refreshTokens)
   user!: User;
 
   @CreateDateColumn()

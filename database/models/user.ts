@@ -6,24 +6,33 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from "typeorm";
-import { Note } from "./note";
+import RefreshToken from "./token";
+import Note from "./note";
+
+type Roles = "super_admin" | "admin" | "user";
 
 @Entity()
-export class User {
+export default class User {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column("text", { unique: true })
-  name!: string;
-
-  @Column("text", { unique: true })
+  @Column({ type: "varchar", length: 255, nullable: false })
   email!: string;
 
-  @Column("text")
+  @Column({ type: "varchar", length: 255, nullable: false, select: false })
   password!: string;
 
-  @Column("text")
-  role!: string;
+  @Column({ type: "varchar", length: 255, nullable: true })
+  firstName!: string;
+
+  @Column({ type: "varchar", length: 255, nullable: true })
+  lastName!: string;
+
+  @Column({ type: "varchar", length: 255, nullable: false })
+  role!: Roles;
+
+  @OneToMany(() => RefreshToken, (token) => token.user)
+  refreshTokens!: RefreshToken[];
 
   @OneToMany(() => Note, (note) => note.user)
   notes!: Note[];

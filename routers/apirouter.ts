@@ -1,7 +1,7 @@
 import { Router } from "express";
-import userRouter from "./users";
+import userRouter from "./apiRoutes/users";
 import serviceRouter from "../services/router";
-import verifyAPIKey from "../middleware/auth";
+import { verifyAPIKey } from "../middleware/auth";
 
 const router = Router();
 

@@ -1,12 +1,16 @@
 import { DataSource } from "typeorm";
 import "reflect-metadata";
 import { seedDatabase } from "./seeders";
-import { User } from "./models/user";
-import { Note } from "./models/note";
+import User from "./models/user";
+import Note from "./models/note";
+import RefreshToken from "./models/token";
+
+export type Entities = User | RefreshToken | Note;
 
 export const entities = {
   User,
   Note,
+  RefreshToken,
 };
 
 export const dataSource = new DataSource({
