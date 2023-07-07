@@ -25,18 +25,22 @@ function index() {
     <div className={styles.services}>
       <h1>Services</h1>
       <div className={styles.list}>
-        {listedServices?.map((service) => {
-          return (
-            <Link
-              className={styles.service}
-              key={service.title}
-              to={serviceMapper[service.formatted_name].endpoint}
-            >
-              <h2>{getFormattedServiceName(service.name)}</h2>
-              <p>{service.description}</p>
-            </Link>
-          );
-        })}
+        {listedServices
+          ?.filter((s) => {
+            return !!serviceMapper[s.formatted_name];
+          })
+          .map((service) => {
+            return (
+              <Link
+                className={styles.service}
+                key={service.title}
+                to={serviceMapper[service.formatted_name].endpoint}
+              >
+                <h2>{getFormattedServiceName(service.name)}</h2>
+                <p>{service.description}</p>
+              </Link>
+            );
+          })}
       </div>
     </div>
   );

@@ -29,6 +29,7 @@
   text-align: left;
   cursor: pointer;
   display: inline-block;
+  text-decoration: none;
 
   &:hover {
     @include shimmerLinearBackground;

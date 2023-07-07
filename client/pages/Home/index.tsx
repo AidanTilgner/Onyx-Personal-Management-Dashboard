@@ -1,11 +1,12 @@
 import React from "react";
 import { useUser } from "../../Contexts/User";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../utils/auth";
 import styles from "./index.module.scss";
 
 function index() {
   const { isLoggedIn } = useUser();
+  const navigate = useNavigate();
 
   return (
     <div className={styles.home}>
@@ -21,10 +22,10 @@ function index() {
         <button
           className="btn btn-secondary"
           onClick={() => {
-            logout();
+            navigate("/services");
           }}
         >
-          Logout
+          Services
         </button>
       )}
     </div>
